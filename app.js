@@ -49,86 +49,84 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ---------- MAP (Gallery + Detail) ---------- */
-  let map, markersLayer;
-
   const mapAreas = {
-    angkor:     { center: [11.002, 104.945], zoom: 15, label: 'Angkor Borei' },
-    prektotal:  { center: [13.188, 103.729], zoom: 14, label: 'Prek Toal' },
-    kampot:     { center: [10.594, 104.161], zoom: 14, label: 'Kampot Riverside' },
+    angkor: { image: 'map_angkor_borei.png', label: 'Angkor Borei' },
+    choam:  { image: 'map_choam_ksant.png', label: 'Choam Ksant' },
+    preah:  { image: 'map_preah_rumkel.png', label: 'Preah Rumkel' },
   };
 
   const drySeasonMarkers = [
-    { lat: 11.0020, lng: 104.9420, type: 'bathroom', label: 'Public Restroom', emoji: '🚿' },
-    { lat: 10.9980, lng: 104.9500, type: 'food',     label: 'Nom Banh Chok Stand', emoji: '🍜' },
-    { lat: 11.0060, lng: 104.9380, type: 'rest',     label: 'Shaded Rest Area', emoji: '🛖' },
-    { lat: 10.9950, lng: 104.9460, type: 'waste',    label: 'Recycling Station', emoji: '♻️' },
-    { lat: 11.0040, lng: 104.9530, type: 'food',     label: 'Local Khmer Kitchen', emoji: '🍜' },
-    { lat: 11.0080, lng: 104.9450, type: 'rest',     label: 'Angkor Borei Viewpoint', emoji: '🛖' },
-    { lat: 10.9990, lng: 104.9360, type: 'bathroom', label: 'Eco-Toilet Station', emoji: '🚿' },
+    { x: 30, y: 40, type: 'bathroom', label: 'Public Restroom', emoji: '🚿' },
+    { x: 50, y: 55, type: 'food',     label: 'Nom Banh Chok Stand', emoji: '🍜' },
+    { x: 60, y: 35, type: 'rest',     label: 'Shaded Rest Area', emoji: '🛖' },
+    { x: 45, y: 70, type: 'waste',    label: 'Recycling Station', emoji: '♻️' },
+    { x: 70, y: 45, type: 'food',     label: 'Local Khmer Kitchen', emoji: '🍜' },
+    { x: 80, y: 60, type: 'rest',     label: 'Scenic Viewpoint', emoji: '🛖' },
+    { x: 40, y: 20, type: 'bathroom', label: 'Eco-Toilet Station', emoji: '🚿' },
+    { x: 55, y: 45, type: 'you',      label: 'You are here', emoji: '📍' },
   ];
 
   const wetSeasonMarkers = [
-    { lat: 11.0020, lng: 104.9420, type: 'bathroom', label: 'Covered Restroom', emoji: '🚿' },
-    { lat: 10.9980, lng: 104.9500, type: 'craft',    label: 'Indoor Pottery Class', emoji: '🏺' },
-    { lat: 11.0060, lng: 104.9380, type: 'craft',    label: 'Lotus Weaving Workshop', emoji: '🧶' },
-    { lat: 11.0040, lng: 104.9530, type: 'food',     label: 'Covered Market Kitchen', emoji: '🍜' },
-    { lat: 10.9950, lng: 104.9460, type: 'flood',    label: 'Flooded — Avoid', emoji: '⚠️' },
-    { lat: 11.0080, lng: 104.9450, type: 'flood',    label: 'Flooded Trail Closure', emoji: '⚠️' },
-    { lat: 10.9990, lng: 104.9360, type: 'rest',     label: 'Elevated Shelter', emoji: '🛖' },
+    { x: 30, y: 40, type: 'bathroom', label: 'Covered Restroom', emoji: '🚿' },
+    { x: 50, y: 55, type: 'craft',    label: 'Indoor Pottery Class', emoji: '🏺' },
+    { x: 60, y: 35, type: 'craft',    label: 'Lotus Weaving Workshop', emoji: '🧶' },
+    { x: 70, y: 45, type: 'food',     label: 'Covered Market Kitchen', emoji: '🍜' },
+    { x: 45, y: 70, type: 'flood',    label: 'Flooded — Avoid', emoji: '⚠️' },
+    { x: 80, y: 60, type: 'flood',    label: 'Flooded Trail Closure', emoji: '⚠️' },
+    { x: 40, y: 20, type: 'rest',     label: 'Elevated Shelter', emoji: '🛖' },
+    { x: 55, y: 45, type: 'you',      label: 'You are here', emoji: '📍' },
   ];
 
-  function createMarkerIcon(marker) {
-    return L.divIcon({
-      className: '',
-      html: `<div class="custom-marker marker-${marker.type}">${marker.emoji}</div>`,
-      iconSize: [36, 36],
-      iconAnchor: [18, 18],
-      popupAnchor: [0, -22],
-    });
-  }
-
-  function addMarkers(markerData) {
-    if (markersLayer) markersLayer.clearLayers();
-    markersLayer = L.layerGroup();
-
-    markerData.forEach(m => {
-      const marker = L.marker([m.lat, m.lng], { icon: createMarkerIcon(m) });
-      marker.bindPopup(`<strong>${m.label}</strong><br><span style="color:#6a8f96">${m.type === 'flood' ? 'Area inaccessible due to flooding' : 'Available for travelers'}</span>`);
-      markersLayer.addLayer(marker);
-    });
-
-    markersLayer.addTo(map);
-  }
-
-  let mapInitialized = false;
   const gallery = document.getElementById('map-gallery');
   const detail  = document.getElementById('map-detail');
   const backBtn = document.getElementById('map-back-btn');
   const areaLabel = document.getElementById('map-area-label');
+  const cartoonMapImage = document.getElementById('cartoon-map-image');
+  const mapPinsContainer = document.getElementById('map-pins-container');
+
+  function addMarkers(markerData) {
+    if (!mapPinsContainer) return;
+    mapPinsContainer.innerHTML = '';
+    
+    markerData.forEach(m => {
+      const pin = document.createElement('div');
+      pin.className = `custom-marker marker-${m.type}`;
+      pin.style.left = `${m.x}%`;
+      pin.style.top = `${m.y}%`;
+      pin.style.position = 'absolute';
+      pin.innerHTML = `${m.emoji}`;
+      
+      const popup = document.createElement('div');
+      popup.className = 'custom-popup';
+      popup.innerHTML = `<strong>${m.label}</strong><br><span style="color:#6a8f96">${m.type === 'flood' ? 'Area inaccessible' : 'Available for travelers'}</span>`;
+      pin.appendChild(popup);
+      
+      pin.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.custom-popup').forEach(p => p.classList.remove('show'));
+        popup.classList.add('show');
+      });
+
+      mapPinsContainer.appendChild(pin);
+    });
+  }
+
+  // Click outside to close popups
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.custom-popup').forEach(p => p.classList.remove('show'));
+  });
 
   function openMapDetail(areaKey) {
     const area = mapAreas[areaKey] || mapAreas.angkor;
     gallery.style.display = 'none';
     detail.classList.remove('hidden-view');
     areaLabel.textContent = area.label;
-
-    if (!mapInitialized) {
-      map = L.map('leaflet-map', {
-        center: area.center,
-        zoom: area.zoom,
-        zoomControl: true,
-        attributionControl: false,
-      });
-      L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png', {
-        maxZoom: 18,
-      }).addTo(map);
-      mapInitialized = true;
-    } else {
-      map.setView(area.center, area.zoom);
+    
+    if (cartoonMapImage) {
+      cartoonMapImage.src = area.image;
     }
-
+    
     addMarkers(drySeasonMarkers);
-    setTimeout(() => map.invalidateSize(), 150);
   }
 
   // Gallery card buttons
@@ -137,10 +135,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Back to gallery
-  backBtn.addEventListener('click', () => {
-    detail.classList.add('hidden-view');
-    gallery.style.display = '';
-  });
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      detail.classList.add('hidden-view');
+      gallery.style.display = '';
+    });
+  }
 
   /* ---------- SEASON FILTER POPUP ---------- */
   const filterBtn   = document.getElementById('filter-season-btn');
