@@ -1,539 +1,869 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="ROUTRA — Sustainable tourism app for discovering rural Cambodia. Curated routes, local experiences, and community-led travel." />
-  <title>ROUTRA — Sustainable Rural Tourism</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/png" href="icon.png" />
-  <link rel="apple-touch-icon" href="icon.png" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-
-  <!-- ============ TAB 1: DISCOVER ============ -->
-  <section id="tab-discover" class="tab-view">
-    <div class="tab-scroll-area">
-      <header class="discover-header">
-        <div class="header-watermark"></div>
-        <div class="brand-row">
-          <h1 class="brand-name"><img src="logo.png" alt="ROUTRA" class="brand-logo" /></h1>
-          <button id="notif-btn" class="icon-btn" aria-label="Notifications">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <span class="notif-dot"></span>
-          </button>
-        </div>
-        <div class="search-bar" id="discover-search">
-          <svg width="18" height="18" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" placeholder="Search routes..." aria-label="Search routes" />
-        </div>
-      </header>
-
-      <div class="filter-pills" id="categories-scroll">
-        <button class="pill active" data-cat="all">
-          <span>🗺️</span> All
-        </button>
-        <button class="pill" data-cat="bathrooms">
-          <span>🚿</span> Bathrooms
-        </button>
-        <button class="pill" data-cat="food">
-          <span>🍜</span> Local Food
-        </button>
-        <button class="pill" data-cat="rest">
-          <span>🛖</span> Rest Areas
-        </button>
-        <button class="pill" data-cat="waste">
-          <span>♻️</span> Waste Points
-        </button>
-        <button class="pill" data-cat="guides">
-          <span>🧭</span> Guides
-        </button>
-      </div>
-
-      <!-- Dynamic Alert Banner -->
-      <div class="alert-banner" id="weather-alert">
-        <div class="alert-icon">🌤️</div>
-        <div class="alert-content">
-          <strong>ROUTRA Weather Check</strong>
-          <p>Monsoon Season is active. All curated routes are dynamically optimized for indoor local experiences.</p>
-        </div>
-        <button class="alert-close" aria-label="Dismiss alert">✕</button>
-      </div>
-
-      <section class="content-section">
-        <h2 class="section-title">Curated Rural Routes</h2>
-        <div class="route-card" id="route-angkor">
-          <img src="angkor_borei.jpg" alt="Angkor Borei Cultural Trail" loading="lazy" />
-          <div class="route-card-overlay">
-            <span class="route-tag">Cultural</span>
-            <h3>Angkor Borei Cultural Trail</h3>
-            <p class="route-subtitle">Ancient temples along the Mekong lowlands</p>
-            <p class="route-meta">Takeo Province · 3 days · 42 km</p>
-          </div>
-        </div>
-        <div class="route-card" id="route-takeo">
-          <img src="takeo_offgrid.jpg" alt="Takeo Off-Grid Cultural Journey" loading="lazy" />
-          <div class="route-card-overlay">
-            <span class="route-tag">Adventure</span>
-            <h3>Takeo Off-Grid Cultural Journey</h3>
-            <p class="route-subtitle">Remote trails through untouched villages</p>
-            <p class="route-meta">Remote Trails · 2 days · 28 km</p>
-          </div>
-        </div>
-        <div class="route-card" id="route-kampot">
-          <img src="kampot_riverside.jpg" alt="Kampot Riverside Loop" loading="lazy" />
-          <div class="route-card-overlay">
-            <span class="route-tag">Nature</span>
-            <h3>Kampot Riverside Loop</h3>
-            <p class="route-subtitle">Riverside pepper farms & sunset fishing</p>
-            <p class="route-meta">Kampot · 1 day · 18 km</p>
-          </div>
-        </div>
-      </section>
-    </div>
-  </section>
-
-  <!-- ============ TAB 2: MAP ============ -->
-  <section id="tab-map" class="tab-view active">
-    <!-- Map Gallery View -->
-    <div id="map-gallery" class="map-gallery">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="ROUTRA — Sustainable tourism app for discovering rural Cambodia. Curated routes, local experiences, and community-led travel."
+    />
+    <title>ROUTRA — Sustainable Rural Tourism</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="icon.png" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ============ TAB 1: DISCOVER ============ -->
+    <section id="tab-discover" class="tab-view">
       <div class="tab-scroll-area">
-        <header class="map-gallery-header">
-          <h1 class="page-title">Community Maps</h1>
-          <p class="map-gallery-desc">Browse curated community maps with local infrastructure, trails, and seasonal routes.</p>
-        </header>
-        <div class="map-cards-scroll">
-          <div class="map-card" id="mc-angkor">
-            <div class="map-card-preview angkor-preview"></div>
-            <div class="map-card-body">
-              <span class="map-card-tag">Cultural Heritage</span>
-              <h3>Angkor Borei</h3>
-              <p>Ancient temple trails · 7 infrastructure points</p>
-              <button class="map-view-btn" data-map="angkor">View Map →</button>
-            </div>
-          </div>
-          <div class="map-card" id="mc-choam">
-            <div class="map-card-preview choam-preview"></div>
-            <div class="map-card-body">
-              <span class="map-card-tag">Mountain Trails</span>
-              <h3>Choam Ksant</h3>
-              <p>Cliff-side paths & villages · 5 rest points</p>
-              <button class="map-view-btn" data-map="choam">View Map →</button>
-            </div>
-          </div>
-          <div class="map-card" id="mc-preah">
-            <div class="map-card-preview preah-preview"></div>
-            <div class="map-card-body">
-              <span class="map-card-tag">Riverside Eco-tourism</span>
-              <h3>Preah Rumkel</h3>
-              <p>Dolphins & waterfalls · 6 local stops</p>
-              <button class="map-view-btn" data-map="preah">View Map →</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Detailed Map View -->
-    <div id="map-detail" class="map-detail hidden-view">
-      <div id="interactive-map-container" class="interactive-map-container">
-        <img id="cartoon-map-image" src="" alt="Cartoon Map" class="map-image" />
-        <div id="map-pins-container" class="map-pins-container"></div>
-      </div>
-      <button id="map-back-btn" class="map-back-btn">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        <span id="map-area-label">Angkor Borei</span>
-      </button>
-      <div class="map-control-panel">
-        <div class="control-search-row">
-          <svg width="16" height="16" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="6"/><line x1="19" y1="19" x2="14" y2="14"/></svg>
-          <input type="text" placeholder="Search infrastructure..." aria-label="Search" />
-          <div class="control-divider"></div>
-          <button id="filter-season-btn" class="control-season-btn" aria-label="Season filter">
-            <span id="season-label-icon">☀️</span>
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 4 6 8 10 4"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    <!-- Season Popup -->
-    <div id="season-popup" class="season-popup hidden">
-      <div class="season-popup-backdrop"></div>
-      <div class="season-popup-content">
-        <div class="season-popup-header">
-          <h3>Season-Aware Routing</h3>
-          <button id="season-popup-close" class="icon-btn" aria-label="Close">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
-        </div>
-        <p class="season-popup-desc">Routes and infrastructure adapt to seasonal conditions. Select a season to see what's accessible.</p>
-        <div class="season-options">
-          <button class="season-option active" data-season="dry">
-            <span class="season-icon">☀️</span>
-            <span class="season-name">Dry Season</span>
-            <span class="season-detail">Nov — Apr</span>
-          </button>
-          <button class="season-option" data-season="wet">
-            <span class="season-icon">🌧️</span>
-            <span class="season-name">Wet Season</span>
-            <span class="season-detail">May — Oct</span>
-          </button>
-        </div>
-        <div id="season-info" class="season-info">
-          <div class="season-info-card"><span class="info-dot green"></span><span>All trails open — full access</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ TAB 3: LOCAL EXPERIENCES ============ -->
-  <section id="tab-experiences" class="tab-view">
-    <div class="tab-scroll-area">
-      <header class="exp-header">
-        <h1 class="page-title">Local Experiences</h1>
-      </header>
-      <div class="exp-tabs" id="exp-tab-bar">
-        <button class="exp-tab active" data-exp="activities">🎨 Activities</button>
-        <button class="exp-tab" data-exp="guides">🧭 Guides</button>
-        <button class="exp-tab" data-exp="homestays">🏡 Homestays</button>
-      </div>
-
-      <!-- Activities Sub-tab -->
-      <div id="exp-activities" class="exp-panel active">
-        <div class="exp-section-header">
-          <div class="exp-section-icon">🪡</div>
-          <div>
-            <h2>Community-Led Activities</h2>
-            <p>Authentic craft & cultural workshops hosted by locals</p>
-          </div>
-        </div>
-        <div class="horizontal-scroll" id="activities-scroll">
-          <div class="activity-card" id="act-lotus">
-            <img src="lotus_weaving.jpg" alt="Lotus Weaving" loading="lazy" />
-            <div class="activity-info">
-              <h3>Lotus Weaving</h3>
-              <p class="activity-loc">📍 Kampong Cham Village</p>
-              <div class="activity-footer">
-                <span class="activity-price">$12 <small>/ person</small></span>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-          <div class="activity-card" id="act-pottery">
-            <img src="pottery_class.jpg" alt="Pottery Class" loading="lazy" />
-            <div class="activity-info">
-              <h3>Pottery Class</h3>
-              <p class="activity-loc">📍 Kompong Chhnang</p>
-              <div class="activity-footer">
-                <span class="activity-price">$8 <small>/ person</small></span>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-          <div class="activity-card" id="act-cooking">
-            <img src="cooking_class.jpg" alt="Khmer Cooking" loading="lazy" />
-            <div class="activity-info">
-              <h3>Khmer Cooking</h3>
-              <p class="activity-loc">📍 Battambang Community</p>
-              <div class="activity-footer">
-                <span class="activity-price">$15 <small>/ person</small></span>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="exp-section-header" style="margin-top:28px;">
-          <div class="exp-section-icon">🌾</div>
-          <div>
-            <h2>Seasonal Highlights</h2>
-            <p>Time-limited experiences aligned with Cambodia's seasons</p>
-          </div>
-        </div>
-        <div class="highlight-cards">
-          <div class="highlight-card">
-            <span class="highlight-emoji">🌾</span>
-            <div>
-              <h4>Rice Harvest Experience</h4>
-              <p>Join local farmers during harvest season — learn traditional techniques</p>
-              <div class="activity-footer">
-                <span class="activity-price">$10 <small>/ person</small></span>
-                <button class="book-btn sm">Book Now</button>
-              </div>
-            </div>
-          </div>
-          <div class="highlight-card">
-            <span class="highlight-emoji">🎶</span>
-            <div>
-              <h4>Chapei Dong Veng Music</h4>
-              <p>Evening performance by UNESCO-recognized local musicians</p>
-              <div class="activity-footer">
-                <span class="activity-price">$5 <small>/ person</small></span>
-                <button class="book-btn sm">Book Now</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Guides Sub-tab -->
-      <div id="exp-guides" class="exp-panel">
-        <div class="exp-section-header">
-          <div class="exp-section-icon">🧭</div>
-          <div>
-            <h2>Certified Local Guides</h2>
-            <p>Community-verified, multilingual tour specialists</p>
-          </div>
-        </div>
-        <div class="horizontal-scroll">
-          <div class="guide-card">
-            <img src="local_guide.jpg" alt="Sokha — Local Guide" loading="lazy" />
-            <div class="guide-info">
-              <h3>Sokha</h3>
-              <p class="guide-specialty">Cultural Heritage</p>
-              <p class="guide-lang">Khmer · English · French</p>
-              <div class="activity-footer">
-                <span class="activity-price">$25 <small>/ day</small></span>
-                <button class="connect-btn">Connect</button>
-              </div>
-            </div>
-          </div>
-          <div class="guide-card">
-            <div class="guide-avatar-placeholder">
-              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-                <circle cx="32" cy="22" r="12" stroke="#447c89" stroke-width="1.5" fill="rgba(68,124,137,.08)"/>
-                <path d="M10 56c0-12.15 9.85-22 22-22s22 9.85 22 22" stroke="#447c89" stroke-width="1.5" fill="rgba(68,124,137,.04)"/>
-                <circle cx="32" cy="22" r="4" fill="rgba(68,124,137,.15)"/>
-                <path d="M28 19 h8 M32 15 v8" stroke="rgba(68,124,137,.12)" stroke-width="1"/>
+        <header class="discover-header">
+          <div class="header-watermark"></div>
+          <div class="brand-row">
+            <h1 class="brand-name">
+              <img src="logo.png" alt="ROUTRA" class="brand-logo" />
+            </h1>
+            <button id="notif-btn" class="icon-btn" aria-label="Notifications">
+              <svg
+                width="22"
+                height="22"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
               </svg>
-            </div>
-            <div class="guide-info">
-              <h3>Dara</h3>
-              <p class="guide-specialty">Nature & Wildlife</p>
-              <p class="guide-lang">Khmer · English</p>
-              <div class="activity-footer">
-                <span class="activity-price">$20 <small>/ day</small></span>
-                <button class="connect-btn">Connect</button>
-              </div>
-            </div>
+              <span class="notif-dot"></span>
+            </button>
           </div>
-          <div class="guide-card">
-            <div class="guide-avatar-placeholder">
-              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-                <circle cx="32" cy="22" r="12" stroke="#447c89" stroke-width="1.5" fill="rgba(68,124,137,.08)"/>
-                <path d="M10 56c0-12.15 9.85-22 22-22s22 9.85 22 22" stroke="#447c89" stroke-width="1.5" fill="rgba(68,124,137,.04)"/>
-                <circle cx="32" cy="22" r="4" fill="rgba(68,124,137,.15)"/>
-                <path d="M28 19 h8 M32 15 v8" stroke="rgba(68,124,137,.12)" stroke-width="1"/>
-              </svg>
-            </div>
-            <div class="guide-info">
-              <h3>Chenda</h3>
-              <p class="guide-specialty">Off-Road Cycling</p>
-              <p class="guide-lang">Khmer · English</p>
-              <div class="activity-footer">
-                <span class="activity-price">$22 <small>/ day</small></span>
-                <button class="connect-btn">Connect</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Homestays Sub-tab -->
-      <div id="exp-homestays" class="exp-panel">
-        <div class="exp-section-header">
-          <div class="exp-section-icon">🏡</div>
-          <div>
-            <h2>Community Homestays</h2>
-            <p>Stay with local families for an authentic experience</p>
-          </div>
-        </div>
-        <div class="horizontal-scroll">
-          <div class="activity-card" id="stay-phum">
-            <img src="homestay.jpg" alt="Phum Khmer Homestay" loading="lazy" />
-            <div class="activity-info">
-              <h3>Phum Khmer Homestay</h3>
-              <p class="activity-loc">📍 Takeo · Stilt House</p>
-              <div class="activity-footer">
-                <span class="activity-price">$18 <small>/ night</small></span>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-          <div class="activity-card">
-            <img src="kampot_riverside.jpg" alt="Riverside Community Lodge" loading="lazy" />
-            <div class="activity-info">
-              <h3>Riverside Lodge</h3>
-              <p class="activity-loc">📍 Kampot · Riverside</p>
-              <div class="activity-footer">
-                <span class="activity-price">$22 <small>/ night</small></span>
-                <button class="book-btn">Book Now</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ TAB 4: MY TRIP & SOS ============ -->
-  <section id="tab-profile" class="tab-view">
-    <div class="tab-scroll-area">
-      <header class="profile-header">
-        <div class="avatar-ring">
-          <div class="avatar-illustration">
-            <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-              <!-- Hat -->
-              <ellipse cx="26" cy="14" rx="16" ry="4" fill="rgba(195,168,91,.3)" stroke="#c3a85b" stroke-width="1"/>
-              <path d="M16 14 C16 6, 36 6, 36 14" fill="rgba(195,168,91,.2)" stroke="#c3a85b" stroke-width="1"/>
-              <!-- Head -->
-              <circle cx="26" cy="22" r="8" fill="rgba(68,124,137,.08)" stroke="#447c89" stroke-width="1.5"/>
-              <!-- Eyes -->
-              <circle cx="23" cy="21" r="1.2" fill="#447c89"/>
-              <circle cx="29" cy="21" r="1.2" fill="#447c89"/>
-              <!-- Smile -->
-              <path d="M23 25 Q26 28 29 25" stroke="#447c89" stroke-width="1" fill="none" stroke-linecap="round"/>
-              <!-- Body -->
-              <path d="M14 46 C14 36, 20 31, 26 31 C32 31, 38 36, 38 46" fill="rgba(68,124,137,.06)" stroke="#447c89" stroke-width="1.5"/>
-              <!-- Backpack straps -->
-              <line x1="22" y1="31" x2="20" y2="40" stroke="#c3a85b" stroke-width="1.2" stroke-linecap="round"/>
-              <line x1="30" y1="31" x2="32" y2="40" stroke="#c3a85b" stroke-width="1.2" stroke-linecap="round"/>
-              <!-- Camera -->
-              <rect x="23" y="34" width="6" height="4" rx="1" fill="rgba(195,168,91,.2)" stroke="#c3a85b" stroke-width=".8"/>
-              <circle cx="26" cy="36" r="1" fill="#c3a85b"/>
+          <div class="search-bar" id="discover-search">
+            <svg
+              width="18"
+              height="18"
+              fill="none"
+              stroke="#999"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="8" cy="8" r="7" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
+            <input
+              type="text"
+              placeholder="Search routes..."
+              aria-label="Search routes"
+            />
           </div>
-        </div>
-        <h1 class="profile-name">Traveler</h1>
-        <p class="profile-sub">Sustainable Explorer · Since 2026</p>
-        <div class="profile-progress">
-          <div class="progress-label">
-            <span>Profile Completion</span>
-            <span class="progress-pct">65%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: 65%;"></div>
-          </div>
-        </div>
-      </header>
+        </header>
 
-      <div class="profile-stats">
-        <div class="stat-item">
-          <span class="stat-value">3</span>
-          <span class="stat-label">Routes</span>
+        <div class="filter-pills" id="categories-scroll">
+          <button class="pill active" data-cat="all">
+            <span>🗺️</span> All
+          </button>
+          <button class="pill" data-cat="bathrooms">
+            <span>🚿</span> Bathrooms
+          </button>
+          <button class="pill" data-cat="food">
+            <span>🍜</span> Local Food
+          </button>
+          <button class="pill" data-cat="rest">
+            <span>🛖</span> Rest Areas
+          </button>
+          <button class="pill" data-cat="waste">
+            <span>♻️</span> Waste Points
+          </button>
+          <button class="pill" data-cat="guides"><span>🧭</span> Guides</button>
         </div>
-        <div class="stat-item">
-          <span class="stat-value">12</span>
-          <span class="stat-label">Days</span>
+
+        <!-- Dynamic Alert Banner -->
+        <div class="alert-banner" id="weather-alert">
+          <div class="alert-icon">🌤️</div>
+          <div class="alert-content">
+            <strong>ROUTRA Weather Check</strong>
+            <p>
+              Monsoon Season is active. All curated routes are dynamically
+              optimized for indoor local experiences.
+            </p>
+          </div>
+          <button class="alert-close" aria-label="Dismiss alert">✕</button>
         </div>
-        <div class="stat-item">
-          <span class="stat-value">2</span>
-          <span class="stat-label">Guides</span>
+
+        <section class="content-section">
+          <h2 class="section-title">Curated Rural Routes</h2>
+          <div class="route-card" id="route-angkor">
+            <img
+              src="angkor_borei.jpg"
+              alt="Angkor Borei Cultural Trail"
+              loading="lazy"
+            />
+            <div class="route-card-overlay">
+              <span class="route-tag">Cultural</span>
+              <h3>Angkor Borei Cultural Trail</h3>
+              <p class="route-subtitle">
+                Ancient temples along the Mekong lowlands
+              </p>
+              <p class="route-meta">Takeo Province · 3 days · 42 km</p>
+            </div>
+          </div>
+          <div class="route-card" id="route-takeo">
+            <img
+              src="takeo_offgrid.jpg"
+              alt="Takeo Off-Grid Cultural Journey"
+              loading="lazy"
+            />
+            <div class="route-card-overlay">
+              <span class="route-tag">Adventure</span>
+              <h3>Takeo Off-Grid Cultural Journey</h3>
+              <p class="route-subtitle">
+                Remote trails through untouched villages
+              </p>
+              <p class="route-meta">Remote Trails · 2 days · 28 km</p>
+            </div>
+          </div>
+          <div class="route-card" id="route-kampot">
+            <img
+              src="kampot_riverside.jpg"
+              alt="Kampot Riverside Loop"
+              loading="lazy"
+            />
+            <div class="route-card-overlay">
+              <span class="route-tag">Nature</span>
+              <h3>Kampot Riverside Loop</h3>
+              <p class="route-subtitle">
+                Riverside pepper farms & sunset fishing
+              </p>
+              <p class="route-meta">Kampot · 1 day · 18 km</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ============ TAB 2: MAP ============ -->
+    <section id="tab-map" class="tab-view active">
+      <!-- Map Gallery View -->
+      <div id="map-gallery" class="map-gallery">
+        <div class="tab-scroll-area">
+          <header class="map-gallery-header">
+            <h1 class="page-title">Community Maps</h1>
+            <p class="map-gallery-desc">
+              Browse curated community maps with local infrastructure, trails,
+              and seasonal routes.
+            </p>
+          </header>
+          <div class="map-cards-scroll">
+            <div class="map-card" id="mc-angkor">
+              <div class="map-card-preview angkor-preview"></div>
+              <div class="map-card-body">
+                <span class="map-card-tag">Cultural Heritage</span>
+                <h3>Angkor Borei</h3>
+                <p>Ancient temple trails · 7 infrastructure points</p>
+                <button class="map-view-btn" data-map="angkor">
+                  View Map →
+                </button>
+              </div>
+            </div>
+            <div class="map-card" id="mc-choam">
+              <div class="map-card-preview choam-preview"></div>
+              <div class="map-card-body">
+                <span class="map-card-tag">Mountain Trails</span>
+                <h3>Choam Ksant</h3>
+                <p>Cliff-side paths & villages · 5 rest points</p>
+                <button class="map-view-btn" data-map="choam">
+                  View Map →
+                </button>
+              </div>
+            </div>
+            <div class="map-card" id="mc-preah">
+              <div class="map-card-preview preah-preview"></div>
+              <div class="map-card-body">
+                <span class="map-card-tag">Riverside Eco-tourism</span>
+                <h3>Preah Rumkel</h3>
+                <p>Dolphins & waterfalls · 6 local stops</p>
+                <button class="map-view-btn" data-map="preah">
+                  View Map →
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <section class="profile-section">
-        <div class="exp-section-header">
-          <div class="exp-section-icon">📥</div>
-          <div>
-            <h2>Offline Routes</h2>
-            <p>Downloaded maps for low-connectivity zones</p>
-          </div>
+      <!-- Detailed Map View -->
+      <div id="map-detail" class="map-detail hidden-view">
+        <div id="interactive-map-container" class="interactive-map-container">
+          <img
+            id="cartoon-map-image"
+            src=""
+            alt="Cartoon Map"
+            class="map-image"
+          />
+          <div id="map-pins-container" class="map-pins-container"></div>
         </div>
-        <div class="offline-routes">
-          <div class="offline-card">
-            <div class="offline-map-thumb angkor-thumb">
-              <span>🏛️</span>
-            </div>
-            <div class="offline-info">
-              <h4>Angkor Borei Cultural Trail</h4>
-              <p>14.2 MB · Last synced 2 days ago</p>
-              <div class="offline-badge ready">✓ Ready for offline use</div>
-            </div>
-          </div>
-          <div class="offline-card">
-            <div class="offline-map-thumb takeo-thumb">
-              <span>🗺️</span>
-            </div>
-            <div class="offline-info">
-              <h4>Takeo Off-Grid</h4>
-              <p>9.7 MB · Last synced 5 days ago</p>
-              <div class="offline-badge ready">✓ Ready for offline use</div>
-            </div>
-          </div>
-          <div class="offline-card pending">
-            <div class="offline-map-thumb kampot-thumb">
-              <span>🌶️</span>
-            </div>
-            <div class="offline-info">
-              <h4>Kampot Riverside Loop</h4>
-              <p>11.4 MB · Not downloaded</p>
-              <button class="download-btn">↓ Download</button>
-            </div>
-          </div>
-        </div>
-        <p class="offline-hint">
-          <svg width="14" height="14" fill="none" stroke="#888" stroke-width="2"><circle cx="7" cy="7" r="6"/><line x1="7" y1="4" x2="7" y2="7"/><line x1="7" y1="10" x2="7.01" y2="10"/></svg>
-          Downloaded maps work in low-connectivity zones
-        </p>
-      </section>
-
-      <section class="profile-section sos-section">
-        <button id="sos-btn" class="sos-button">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          505 SOS Assistance
+        <button id="map-back-btn" class="map-back-btn">
+          <svg
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          <span id="map-area-label">Angkor Borei</span>
         </button>
-        <p class="sos-desc">Emergency help for tourists — connects you to local authorities and your embassy.</p>
-      </section>
-
-      <section class="profile-section settings-section">
-        <div class="exp-section-header">
-          <div class="exp-section-icon">⚙️</div>
-          <div>
-            <h2>Settings</h2>
-            <p>App preferences & sustainability options</p>
+        <div class="map-control-panel">
+          <div class="control-search-row">
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              stroke="#999"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="7" cy="7" r="6" />
+              <line x1="19" y1="19" x2="14" y2="14" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search infrastructure..."
+              aria-label="Search"
+            />
+            <div class="control-divider"></div>
+            <button
+              id="filter-season-btn"
+              class="control-season-btn"
+              aria-label="Season filter"
+            >
+              <span id="season-label-icon">☀️</span>
+              <svg
+                width="12"
+                height="12"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="2 4 6 8 10 4" />
+              </svg>
+            </button>
           </div>
         </div>
-        <div class="settings-list">
-          <div class="settings-item">
-            <span>Language</span>
-            <span class="settings-value">English</span>
+      </div>
+      <!-- Season Popup -->
+      <div id="season-popup" class="season-popup hidden">
+        <div class="season-popup-backdrop"></div>
+        <div class="season-popup-content">
+          <div class="season-popup-header">
+            <h3>Season-Aware Routing</h3>
+            <button id="season-popup-close" class="icon-btn" aria-label="Close">
+              <svg
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
           </div>
-          <div class="settings-item">
-            <span>Notifications</span>
-            <span class="settings-value">On</span>
+          <p class="season-popup-desc">
+            Routes and infrastructure adapt to seasonal conditions. Select a
+            season to see what's accessible.
+          </p>
+          <div class="season-options">
+            <button class="season-option active" data-season="dry">
+              <span class="season-icon">☀️</span>
+              <span class="season-name">Dry Season</span>
+              <span class="season-detail">Nov — Apr</span>
+            </button>
+            <button class="season-option" data-season="wet">
+              <span class="season-icon">🌧️</span>
+              <span class="season-name">Wet Season</span>
+              <span class="season-detail">May — Oct</span>
+            </button>
           </div>
-          <div class="settings-item">
-            <span>Carbon Offset</span>
-            <span class="settings-value eco-badge">Active ♻️</span>
+          <div id="season-info" class="season-info">
+            <div class="season-info-card">
+              <span class="info-dot green"></span
+              ><span>All trails open — full access</span>
+            </div>
           </div>
         </div>
-      </section>
-    </div>
-  </section>
+      </div>
+    </section>
 
-  <!-- ============ BOTTOM NAV ============ -->
-  <nav id="bottom-nav" class="bottom-nav" aria-label="Main navigation">
-    <button class="nav-btn" data-tab="discover" id="nav-discover" aria-label="Discover">
-      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span>Discover</span>
-    </button>
-    <button class="nav-btn active" data-tab="map" id="nav-map" aria-label="Map">
-      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      <span>Map</span>
-    </button>
-    <button class="nav-btn" data-tab="experiences" id="nav-experiences" aria-label="Explore">
-      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-      <span>Explore</span>
-    </button>
-    <button class="nav-btn" data-tab="profile" id="nav-profile" aria-label="Profile">
-      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <span>Profile</span>
-    </button>
-  </nav>
+    <!-- ============ TAB 3: LOCAL EXPERIENCES ============ -->
+    <section id="tab-experiences" class="tab-view">
+      <div class="tab-scroll-area">
+        <header class="exp-header">
+          <h1 class="page-title">Local Experiences</h1>
+        </header>
+        <div class="exp-tabs" id="exp-tab-bar">
+          <button class="exp-tab active" data-exp="activities">
+            🎨 Activities
+          </button>
+          <button class="exp-tab" data-exp="guides">🧭 Guides</button>
+          <button class="exp-tab" data-exp="homestays">🏡 Homestays</button>
+        </div>
 
-  <script src="app.js"></script>
-</body>
+        <!-- Activities Sub-tab -->
+        <div id="exp-activities" class="exp-panel active">
+          <div class="exp-section-header">
+            <div class="exp-section-icon">🪡</div>
+            <div>
+              <h2>Community-Led Activities</h2>
+              <p>Authentic craft & cultural workshops hosted by locals</p>
+            </div>
+          </div>
+          <div class="horizontal-scroll" id="activities-scroll">
+            <div class="activity-card" id="act-lotus">
+              <img src="lotus_weaving.jpg" alt="Lotus Weaving" loading="lazy" />
+              <div class="activity-info">
+                <h3>Lotus Weaving</h3>
+                <p class="activity-loc">📍 Kampong Cham Village</p>
+                <div class="activity-footer">
+                  <span class="activity-price"
+                    >$12 <small>/ person</small></span
+                  >
+                  <button class="book-btn">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="activity-card" id="act-pottery">
+              <img src="pottery_class.jpg" alt="Pottery Class" loading="lazy" />
+              <div class="activity-info">
+                <h3>Pottery Class</h3>
+                <p class="activity-loc">📍 Kompong Chhnang</p>
+                <div class="activity-footer">
+                  <span class="activity-price">$8 <small>/ person</small></span>
+                  <button class="book-btn">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="activity-card" id="act-cooking">
+              <img src="cooking_class.jpg" alt="Khmer Cooking" loading="lazy" />
+              <div class="activity-info">
+                <h3>Khmer Cooking</h3>
+                <p class="activity-loc">📍 Battambang Community</p>
+                <div class="activity-footer">
+                  <span class="activity-price"
+                    >$15 <small>/ person</small></span
+                  >
+                  <button class="book-btn">Book Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="exp-section-header" style="margin-top: 28px">
+            <div class="exp-section-icon">🌾</div>
+            <div>
+              <h2>Seasonal Highlights</h2>
+              <p>Time-limited experiences aligned with Cambodia's seasons</p>
+            </div>
+          </div>
+          <div class="highlight-cards">
+            <div class="highlight-card">
+              <span class="highlight-emoji">🌾</span>
+              <div>
+                <h4>Rice Harvest Experience</h4>
+                <p>
+                  Join local farmers during harvest season — learn traditional
+                  techniques
+                </p>
+                <div class="activity-footer">
+                  <span class="activity-price"
+                    >$10 <small>/ person</small></span
+                  >
+                  <button class="book-btn sm">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="highlight-card">
+              <span class="highlight-emoji">🎶</span>
+              <div>
+                <h4>Chapei Dong Veng Music</h4>
+                <p>Evening performance by UNESCO-recognized local musicians</p>
+                <div class="activity-footer">
+                  <span class="activity-price">$5 <small>/ person</small></span>
+                  <button class="book-btn sm">Book Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guides Sub-tab -->
+        <div id="exp-guides" class="exp-panel">
+          <div class="exp-section-header">
+            <div class="exp-section-icon">🧭</div>
+            <div>
+              <h2>Certified Local Guides</h2>
+              <p>Community-verified, multilingual tour specialists</p>
+            </div>
+          </div>
+          <div class="horizontal-scroll">
+            <div class="guide-card">
+              <img
+                src="local_guide.jpg"
+                alt="Sokha — Local Guide"
+                loading="lazy"
+              />
+              <div class="guide-info">
+                <h3>Sokha</h3>
+                <p class="guide-specialty">Cultural Heritage</p>
+                <p class="guide-lang">Khmer · English · French</p>
+                <div class="activity-footer">
+                  <span class="activity-price">$25 <small>/ day</small></span>
+                  <button class="connect-btn">Connect</button>
+                </div>
+              </div>
+            </div>
+            <div class="guide-card">
+              <div class="guide-avatar-placeholder">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                  <circle
+                    cx="32"
+                    cy="22"
+                    r="12"
+                    stroke="#447c89"
+                    stroke-width="1.5"
+                    fill="rgba(68,124,137,.08)"
+                  />
+                  <path
+                    d="M10 56c0-12.15 9.85-22 22-22s22 9.85 22 22"
+                    stroke="#447c89"
+                    stroke-width="1.5"
+                    fill="rgba(68,124,137,.04)"
+                  />
+                  <circle cx="32" cy="22" r="4" fill="rgba(68,124,137,.15)" />
+                  <path
+                    d="M28 19 h8 M32 15 v8"
+                    stroke="rgba(68,124,137,.12)"
+                    stroke-width="1"
+                  />
+                </svg>
+              </div>
+              <div class="guide-info">
+                <h3>Dara</h3>
+                <p class="guide-specialty">Nature & Wildlife</p>
+                <p class="guide-lang">Khmer · English</p>
+                <div class="activity-footer">
+                  <span class="activity-price">$20 <small>/ day</small></span>
+                  <button class="connect-btn">Connect</button>
+                </div>
+              </div>
+            </div>
+            <div class="guide-card">
+              <div class="guide-avatar-placeholder">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                  <circle
+                    cx="32"
+                    cy="22"
+                    r="12"
+                    stroke="#447c89"
+                    stroke-width="1.5"
+                    fill="rgba(68,124,137,.08)"
+                  />
+                  <path
+                    d="M10 56c0-12.15 9.85-22 22-22s22 9.85 22 22"
+                    stroke="#447c89"
+                    stroke-width="1.5"
+                    fill="rgba(68,124,137,.04)"
+                  />
+                  <circle cx="32" cy="22" r="4" fill="rgba(68,124,137,.15)" />
+                  <path
+                    d="M28 19 h8 M32 15 v8"
+                    stroke="rgba(68,124,137,.12)"
+                    stroke-width="1"
+                  />
+                </svg>
+              </div>
+              <div class="guide-info">
+                <h3>Chenda</h3>
+                <p class="guide-specialty">Off-Road Cycling</p>
+                <p class="guide-lang">Khmer · English</p>
+                <div class="activity-footer">
+                  <span class="activity-price">$22 <small>/ day</small></span>
+                  <button class="connect-btn">Connect</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Homestays Sub-tab -->
+        <div id="exp-homestays" class="exp-panel">
+          <div class="exp-section-header">
+            <div class="exp-section-icon">🏡</div>
+            <div>
+              <h2>Community Homestays</h2>
+              <p>Stay with local families for an authentic experience</p>
+            </div>
+          </div>
+          <div class="horizontal-scroll">
+            <div class="activity-card" id="stay-phum">
+              <img
+                src="homestay.jpg"
+                alt="Phum Khmer Homestay"
+                loading="lazy"
+              />
+              <div class="activity-info">
+                <h3>Phum Khmer Homestay</h3>
+                <p class="activity-loc">📍 Takeo · Stilt House</p>
+                <div class="activity-footer">
+                  <span class="activity-price">$18 <small>/ night</small></span>
+                  <button class="book-btn">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="activity-card">
+              <img
+                src="kampot_riverside.jpg"
+                alt="Riverside Community Lodge"
+                loading="lazy"
+              />
+              <div class="activity-info">
+                <h3>Riverside Lodge</h3>
+                <p class="activity-loc">📍 Kampot · Riverside</p>
+                <div class="activity-footer">
+                  <span class="activity-price">$22 <small>/ night</small></span>
+                  <button class="book-btn">Book Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TAB 4: MY TRIP & SOS ============ -->
+    <section id="tab-profile" class="tab-view">
+      <div class="tab-scroll-area">
+        <header class="profile-header">
+          <div class="avatar-ring">
+            <div class="avatar-illustration">
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                <!-- Hat -->
+                <ellipse
+                  cx="26"
+                  cy="14"
+                  rx="16"
+                  ry="4"
+                  fill="rgba(195,168,91,.3)"
+                  stroke="#c3a85b"
+                  stroke-width="1"
+                />
+                <path
+                  d="M16 14 C16 6, 36 6, 36 14"
+                  fill="rgba(195,168,91,.2)"
+                  stroke="#c3a85b"
+                  stroke-width="1"
+                />
+                <!-- Head -->
+                <circle
+                  cx="26"
+                  cy="22"
+                  r="8"
+                  fill="rgba(68,124,137,.08)"
+                  stroke="#447c89"
+                  stroke-width="1.5"
+                />
+                <!-- Eyes -->
+                <circle cx="23" cy="21" r="1.2" fill="#447c89" />
+                <circle cx="29" cy="21" r="1.2" fill="#447c89" />
+                <!-- Smile -->
+                <path
+                  d="M23 25 Q26 28 29 25"
+                  stroke="#447c89"
+                  stroke-width="1"
+                  fill="none"
+                  stroke-linecap="round"
+                />
+                <!-- Body -->
+                <path
+                  d="M14 46 C14 36, 20 31, 26 31 C32 31, 38 36, 38 46"
+                  fill="rgba(68,124,137,.06)"
+                  stroke="#447c89"
+                  stroke-width="1.5"
+                />
+                <!-- Backpack straps -->
+                <line
+                  x1="22"
+                  y1="31"
+                  x2="20"
+                  y2="40"
+                  stroke="#c3a85b"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                />
+                <line
+                  x1="30"
+                  y1="31"
+                  x2="32"
+                  y2="40"
+                  stroke="#c3a85b"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                />
+                <!-- Camera -->
+                <rect
+                  x="23"
+                  y="34"
+                  width="6"
+                  height="4"
+                  rx="1"
+                  fill="rgba(195,168,91,.2)"
+                  stroke="#c3a85b"
+                  stroke-width=".8"
+                />
+                <circle cx="26" cy="36" r="1" fill="#c3a85b" />
+              </svg>
+            </div>
+          </div>
+          <h1 class="profile-name">Traveler</h1>
+          <p class="profile-sub">Sustainable Explorer · Since 2026</p>
+          <div class="profile-progress">
+            <div class="progress-label">
+              <span>Profile Completion</span>
+              <span class="progress-pct">65%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 65%"></div>
+            </div>
+          </div>
+        </header>
+
+        <div class="profile-stats">
+          <div class="stat-item">
+            <span class="stat-value">3</span>
+            <span class="stat-label">Routes</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">12</span>
+            <span class="stat-label">Days</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">2</span>
+            <span class="stat-label">Guides</span>
+          </div>
+        </div>
+
+        <section class="profile-section">
+          <div class="exp-section-header">
+            <div class="exp-section-icon">📥</div>
+            <div>
+              <h2>Offline Routes</h2>
+              <p>Downloaded maps for low-connectivity zones</p>
+            </div>
+          </div>
+          <div class="offline-routes">
+            <div class="offline-card">
+              <div class="offline-map-thumb angkor-thumb">
+                <span>🏛️</span>
+              </div>
+              <div class="offline-info">
+                <h4>Angkor Borei Cultural Trail</h4>
+                <p>14.2 MB · Last synced 2 days ago</p>
+                <div class="offline-badge ready">✓ Ready for offline use</div>
+              </div>
+            </div>
+            <div class="offline-card">
+              <div class="offline-map-thumb takeo-thumb">
+                <span>🗺️</span>
+              </div>
+              <div class="offline-info">
+                <h4>Takeo Off-Grid</h4>
+                <p>9.7 MB · Last synced 5 days ago</p>
+                <div class="offline-badge ready">✓ Ready for offline use</div>
+              </div>
+            </div>
+            <div class="offline-card pending">
+              <div class="offline-map-thumb kampot-thumb">
+                <span>🌶️</span>
+              </div>
+              <div class="offline-info">
+                <h4>Kampot Riverside Loop</h4>
+                <p>11.4 MB · Not downloaded</p>
+                <button class="download-btn">↓ Download</button>
+              </div>
+            </div>
+          </div>
+          <p class="offline-hint">
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              stroke="#888"
+              stroke-width="2"
+            >
+              <circle cx="7" cy="7" r="6" />
+              <line x1="7" y1="4" x2="7" y2="7" />
+              <line x1="7" y1="10" x2="7.01" y2="10" />
+            </svg>
+            Downloaded maps work in low-connectivity zones
+          </p>
+        </section>
+
+        <section class="profile-section sos-section">
+          <button id="sos-btn" class="sos-button">
+            <svg
+              width="22"
+              height="22"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
+              />
+            </svg>
+            505 SOS Assistance
+          </button>
+          <p class="sos-desc">
+            Emergency help for tourists — connects you to local authorities and
+            your embassy.
+          </p>
+        </section>
+
+        <section class="profile-section settings-section">
+          <div class="exp-section-header">
+            <div class="exp-section-icon">⚙️</div>
+            <div>
+              <h2>Settings</h2>
+              <p>App preferences & sustainability options</p>
+            </div>
+          </div>
+          <div class="settings-list">
+            <div class="settings-item">
+              <span>Language</span>
+              <span class="settings-value">English</span>
+            </div>
+            <div class="settings-item">
+              <span>Notifications</span>
+              <span class="settings-value">On</span>
+            </div>
+            <div class="settings-item">
+              <span>Carbon Offset</span>
+              <span class="settings-value eco-badge">Active ♻️</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ============ BOTTOM NAV ============ -->
+    <nav id="bottom-nav" class="bottom-nav" aria-label="Main navigation">
+      <button
+        class="nav-btn"
+        data-tab="discover"
+        id="nav-discover"
+        aria-label="Discover"
+      >
+        <svg
+          width="22"
+          height="22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span>Discover</span>
+      </button>
+      <button
+        class="nav-btn active"
+        data-tab="map"
+        id="nav-map"
+        aria-label="Map"
+      >
+        <svg
+          width="22"
+          height="22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <line x1="2" y1="12" x2="22" y2="12" />
+          <path
+            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+          />
+        </svg>
+        <span>Map</span>
+      </button>
+      <button
+        class="nav-btn"
+        data-tab="experiences"
+        id="nav-experiences"
+        aria-label="Explore"
+      >
+        <svg
+          width="22"
+          height="22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polygon
+            points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
+          />
+        </svg>
+        <span>Explore</span>
+      </button>
+      <button
+        class="nav-btn"
+        data-tab="profile"
+        id="nav-profile"
+        aria-label="Profile"
+      >
+        <svg
+          width="22"
+          height="22"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <span>Profile</span>
+      </button>
+    </nav>
+
+    <script src="app.js"></script>
+  </body>
 </html>
