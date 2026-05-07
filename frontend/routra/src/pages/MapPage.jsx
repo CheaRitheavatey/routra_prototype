@@ -25,7 +25,7 @@ export default function MapPage() {
         <div className="header-watermark"></div>
         <div className="brand-row">
           <h1 className="brand-name">
-            <img src="/logo.png" alt="ROUTRA" className="brand-logo" />
+            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="ROUTRA" className="brand-logo" />
           </h1>
           <button id="notif-btn" className="icon-btn map-icon-btn" aria-label="Notifications">
             <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

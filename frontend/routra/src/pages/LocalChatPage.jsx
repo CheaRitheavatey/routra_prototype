@@ -29,7 +29,7 @@ export default function LocalChatPage() {
   return (
     <div
       className="min-h-screen bg-[#eaf3fb] pb-0 flex flex-col bg-cover bg-center"
-      style={{ backgroundImage: "url('/telegrambg.png')" }}
+      style={{ backgroundImage: `url('${import.meta.env.BASE_URL}telegrambg.png')` }}
     >
       <div className="sticky top-0 bg-white/95 border-b border-stone-100 z-10 px-4 py-4 backdrop-blur-sm">
         <div className="flex items-center gap-2">
