@@ -15,23 +15,16 @@ export function AppProvider({ children }) {
     return saved ? JSON.parse(saved).map(msg => ({
       ...msg,
       timestamp: new Date(msg.timestamp)
-    })) : [
-      {
-        id: 'welcome',
-        type: 'system',
-        text: 'Welcome! New booking requests from travelers will appear here.',
-        timestamp: new Date(),
-      },
-    ];
+    })) : [];
   });
-
-  useEffect(() => {
-    localStorage.setItem('bookings', JSON.stringify(bookings));
-  }, [bookings]);
 
   useEffect(() => {
     localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
   }, [chatMessages]);
+
+  useEffect(() => {
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+  }, [bookings]);
 
   const addBooking = useCallback((booking) => {
     const newBooking = {
@@ -69,8 +62,20 @@ export function AppProvider({ children }) {
     );
   }, []);
 
+  const sendChatMessage = useCallback((text) => {
+    setChatMessages((prev) => [
+      ...prev,
+      {
+        id: `msg-${Date.now()}`,
+        type: 'user',
+        text,
+        timestamp: new Date(),
+      },
+    ]);
+  }, []);
+
   return (
-    <AppContext.Provider value={{ bookings, chatMessages, addBooking, updateBookingStatus }}>
+    <AppContext.Provider value={{ bookings, chatMessages, addBooking, updateBookingStatus, sendChatMessage }}>
       {children}
     </AppContext.Provider>
   );

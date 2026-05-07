@@ -1,4 +1,6 @@
 import map1Image from './map1.png';
+import map2Image from './map2.png';
+import map3Image from './map3.png';
 
 export const locations = [
   {
@@ -21,7 +23,7 @@ export const locations = [
     name: 'Prek Toal',
     region: 'Battambang Province',
     description: 'Floating village on Tonlé Sap lake, one of Asia\'s most important freshwater ecosystems.',
-    image: map1Image,
+    image: map2Image,
     color: '#2d6a9f',
     markers: [
       { id: 'm1', type: 'homestay', name: 'Floating House Srey', description: 'Stay in a traditional floating home', x: 40, y: 50 },
@@ -35,7 +37,7 @@ export const locations = [
     name: 'Kampot Riverside',
     region: 'Kampot Province',
     description: 'Charming riverside town known for pepper farms, French colonial architecture, and serene views.',
-    image: map1Image,
+    image: map3Image,
     color: '#8b6914',
     markers: [
       { id: 'm1', type: 'restaurant', name: 'Pepper Farm Table', description: 'Farm-to-table using famous Kampot pepper', x: 35, y: 40 },
@@ -66,7 +68,7 @@ export const locations = [
     name: 'Koh Rong Community',
     region: 'Koh Kong Province',
     description: 'Island community with pristine beaches, bioluminescent plankton, and untouched coral reefs.',
-    image: map1Image,
+    image: map2Image,
     color: '#1a7a6e',
     markers: [
       { id: 'm1', type: 'homestay', name: 'Beach Hut Collective', description: 'Eco-friendly bamboo huts on the beach', x: 45, y: 55 },

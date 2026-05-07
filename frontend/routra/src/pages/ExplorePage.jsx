@@ -18,12 +18,20 @@ export default function ExplorePage() {
   };
 
   const handleActivityBook = (activity) => {
-    setSelectedItem({ ...activity, type: 'activity' });
+    // Find the locationId for this activity
+    const locationId = Object.keys(activities).find(key =>
+      activities[key].some(a => a.id === activity.id)
+    );
+    setSelectedItem({ ...activity, type: 'activity', locationId });
     setIsModalOpen(true);
   };
 
   const handleGuideBook = (guide) => {
-    setSelectedItem({ ...guide, type: 'guide' });
+    // Find the locationId for this guide
+    const locationId = Object.keys(guides).find(key =>
+      guides[key].some(g => g.id === guide.id)
+    );
+    setSelectedItem({ ...guide, type: 'guide', locationId });
     setIsModalOpen(true);
   };
 
@@ -33,25 +41,26 @@ export default function ExplorePage() {
   };
 
   const handleBookingSubmit = (formData) => {
+    const location = locations.find(l => l.id === selectedItem.locationId);
+
     if (selectedItem.type === 'activity') {
       addBooking({
         bookingType: 'activity',
-        itemId: selectedItem.id,
-        locationId: Object.keys(activities).find(key => activities[key].some(a => a.id === selectedItem.id)),
+        activityName: selectedItem.name,
+        locationName: location?.name || 'Unknown Location',
         ...formData
       });
     } else if (selectedItem.type === 'guide') {
       addBooking({
         bookingType: 'guide',
-        itemId: selectedItem.id,
-        locationId: Object.keys(guides).find(key => guides[key].some(g => g.id === selectedItem.id)),
+        guideName: selectedItem.name,
+        locationName: location?.name || 'Unknown Location',
         ...formData
       });
     } else if (selectedItem.type === 'homestay') {
       addBooking({
         bookingType: 'homestay',
-        itemId: selectedItem.id,
-        locationId: selectedItem.locationId,
+        homestayName: selectedItem.name,
         ...formData
       });
     }

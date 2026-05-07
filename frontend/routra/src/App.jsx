@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import BottomNav from './components/ui/BottomNav';
 import Toast from './components/ui/Toast';
@@ -9,6 +9,9 @@ import ProfilePage from './pages/ProfilePage';
 import LocalChatPage from './pages/LocalChatPage';
 
 function AppLayout() {
+  const location = useLocation();
+  const showBottomNav = location.pathname !== '/chat';
+
   return (
     <div className="flex flex-col w-full max-w-[430px] min-h-screen bg-stone-50 mx-auto shadow-xl">
       <Routes>
@@ -20,7 +23,7 @@ function AppLayout() {
         <Route path="/local" element={<ProfilePage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <BottomNav />
+      {showBottomNav && <BottomNav />}
       <Toast />
     </div>
   );

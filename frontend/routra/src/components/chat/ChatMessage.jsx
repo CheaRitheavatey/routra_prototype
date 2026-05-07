@@ -1,6 +1,6 @@
 import { useApp } from '../../context/AppContext';
 
-export default function ChatMessage({ msg, onRespond }) {
+export default function ChatMessage({ msg }) {
   const { updateBookingStatus } = useApp();
 
   if (msg.type === 'system') {
@@ -13,11 +13,24 @@ export default function ChatMessage({ msg, onRespond }) {
     );
   }
 
+  if (msg.type === 'user') {
+    return (
+      <div className="px-4 py-3 flex justify-start">
+        <div className="bg-white/90 border border-white rounded-2xl px-4 py-3 max-w-xs shadow-sm">
+          <div className="text-sm text-stone-800 leading-relaxed text-left">{msg.text}</div>
+          <span className="text-[10px] text-stone-400 mt-2 block text-right">
+            {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   if (msg.type === 'booking') {
     return (
-      <div className="px-4 py-3 flex justify-end">
-        <div className="bg-green-100 border border-green-200 rounded-2xl px-4 py-3 max-w-xs">
-          <div className="text-sm text-stone-800 whitespace-pre-line leading-relaxed">{msg.text}</div>
+      <div className="px-4 py-3 flex justify-start">
+        <div className="bg-white/95 border border-white rounded-2xl px-4 py-3 max-w-xs shadow-sm">
+          <div className="text-sm text-stone-800 whitespace-pre-line leading-relaxed text-left">{msg.text}</div>
 
           {msg.bookingType === 'guide' && msg.status === 'pending' && (
             <div className="flex gap-2 mt-3">
